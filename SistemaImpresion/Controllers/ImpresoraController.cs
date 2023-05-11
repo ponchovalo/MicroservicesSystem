@@ -24,13 +24,28 @@ namespace SistemaImpresion.Controllers
             return Ok(await _impresoraRepository.GetAll());
         }
 
-        //Insertar una Impresoras
+        //Insertar una Impresora
         [HttpPost]
         public async Task Post (ImpresoraEntity impresora)
         {
             await _impresoraRepository.InsertDocument(impresora);
         }
 
+        //Obtiene una Impresora por ID
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ImpresoraEntity>> GetById(string id)
+        {
+            var libro = await _impresoraRepository.GetById(id);
+            return Ok(libro);
+        }
+
+        //Registros por paginacion
+        [HttpPost("pagination")]
+        public async Task<ActionResult<IEnumerable<ImpresoraEntity>>> PostPagination(PaginationEntity<ImpresoraEntity> pagination)
+        {
+            var resultados = await _impresoraRepository.PaginationByFilter(pagination);
+            return Ok(resultados);
+        }
 
 
 
