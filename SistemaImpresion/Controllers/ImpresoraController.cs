@@ -24,6 +24,13 @@ namespace SistemaImpresion.Controllers
             return Ok(await _impresoraRepository.GetAll());
         }
 
+        //Insertar una Impresoras
+        [HttpPost]
+        public async Task Post (ImpresoraEntity impresora)
+        {
+            await _impresoraRepository.InsertDocument(impresora);
+        }
+
 
 
 
