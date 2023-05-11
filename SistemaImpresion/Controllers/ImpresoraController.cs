@@ -31,6 +31,14 @@ namespace SistemaImpresion.Controllers
             await _impresoraRepository.InsertDocument(impresora);
         }
 
+        //Edita una impresora
+        [HttpPut("{id}")]
+        public async Task Put(string Id, ImpresoraEntity impresora)
+        {
+            impresora.Id = Id;
+            await _impresoraRepository.UpdateDocument(impresora);
+        }
+
         //Obtiene una Impresora por ID
         [HttpGet("{id}")]
         public async Task<ActionResult<ImpresoraEntity>> GetById(string id)
@@ -47,8 +55,11 @@ namespace SistemaImpresion.Controllers
             return Ok(resultados);
         }
 
-
-
-
+        //Elimina una impresora
+        [HttpDelete("{id}")]
+        public async Task Delete(string Id)
+        {
+            await _impresoraRepository.DeleteById(Id);
+        }
     }
 }
