@@ -11,12 +11,15 @@ namespace SistemaImpresion.Controllers
     [ApiController]
     public class ImpresoraController : ControllerBase
     {
+        //Contructor del controlador
         private readonly IMongoRepository<ImpresoraEntity> _impresoraRepository;
 
         public ImpresoraController(IMongoRepository<ImpresoraEntity> impresoraRepository)
         {
             _impresoraRepository = impresoraRepository;
         }
+
+
         //Obtiene todos los registros de Impresoras
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ImpresoraEntity>>> Get()
