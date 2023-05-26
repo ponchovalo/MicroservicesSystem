@@ -5,14 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using SistemaImpresion.Core;
-using SistemaImpresion.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SistemaImpresion
+namespace Servicios.api.Seguridad
 {
     public class Startup
     {
@@ -26,32 +24,8 @@ namespace SistemaImpresion
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<MongoSettings>(
-                   options =>
-                   {
-                       options.ConnectionString = Configuration.GetSection("MongoDb:ConnectionString").Value;
-                       options.DataBase = Configuration.GetSection("MongoDb:DataBase").Value;
-                   }
-            );
-
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
-
-
-
-
-            services.AddSingleton<MongoSettings>();
-
-            services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
 
             services.AddControllers();
-
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,8 +35,6 @@ namespace SistemaImpresion
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseCors("MyPolicy");
 
             app.UseRouting();
 

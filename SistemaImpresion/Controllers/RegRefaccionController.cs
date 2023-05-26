@@ -13,7 +13,6 @@ namespace SistemaImpresion.Controllers
     {
         //Contructor del controlador
         private readonly IMongoRepository<RegRefaccionEntity> _regRefaccionRepository;
-        //Contructor del controlador
         private readonly IMongoRepository<RefaccionEntity> _refaccionRepository;
 
         public RegRefaccionController(  IMongoRepository<RegRefaccionEntity> regRefaccionRepository, 
