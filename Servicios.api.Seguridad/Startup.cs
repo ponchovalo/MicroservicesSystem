@@ -1,10 +1,16 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Servicios.api.Seguridad.Core.Entities;
+using Servicios.api.Seguridad.Core.Persistance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +32,23 @@ namespace Servicios.api.Seguridad
         {
 
             services.AddControllers();
+
+            services.AddDbContext<SeguridadContext>(opt =>
+            {
+                opt.UseSqlServer(Configuration.GetConnectionString("ConnectionDB"));
+            });
+
+            var builder = services.AddIdentityCore<Usuario>();
+
+            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
+
+            identityBuilder.AddEntityFrameworkStores<SeguridadContext>();
+
+            identityBuilder.AddSignInManager<SignInManager<Usuario>>();
+
+            services.TryAddSingleton<ISystemClock, SystemClock>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
